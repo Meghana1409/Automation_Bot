@@ -4,11 +4,13 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
-
+from mangum import Mangum
 from app.core.config import settings
 from app.core.database import init_db
 from app.api.v1.router import api_router
 from app.api.v1.endpoints import webhook
+import os
+from fastapi.staticfiles import StaticFiles
 
 # Set up logging
 logging.basicConfig(
@@ -38,6 +40,7 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc"
 )
+handler = Mangum(app)
 
 # CORS setup for React / Vite frontend
 app.add_middleware(
@@ -49,11 +52,32 @@ app.add_middleware(
 )
 
 # Ensure upload directories exist and mount static files
-os.makedirs(os.path.join(settings.UPLOAD_DIR, "services"), exist_ok=True)
-os.makedirs(os.path.join(settings.UPLOAD_DIR, "staff"), exist_ok=True)
-from fastapi.staticfiles import StaticFiles
-app.mount("/uploads", StaticFiles(directory=settings.UPLOAD_DIR), name="uploads")
+# os.makedirs(os.path.join(settings.UPLOAD_DIR, "services"), exist_ok=True)
+try:
+    os.makedirs(os.path.join(settings.UPLOAD_DIR, "services"), exist_ok=True)
+except OSError:
+    # Vercel read-only file system handle karne ke liye
+    pass
+# os.makedirs(os.path.join(settings.UPLOAD_DIR, "staff"), exist_ok=True)
+try:
+    os.makedirs(os.path.join(settings.UPLOAD_DIR, "services"), exist_ok=True)
+except OSError:
+    # Vercel read-only file system handle karne ke liye
+    pass
 
+from fastapi.staticfiles import StaticFiles
+
+# Safe check for static files mounting on Vercel (Read-only filesystem)
+upload_dir = getattr(settings, "UPLOAD_DIR", "uploads")
+if os.path.exists(upload_dir):
+    app.mount("/uploads", StaticFiles(directory=upload_dir), name="uploads")
+else:
+    # Vercel par uploads folder nahi hota, isliye dummy/bypass ya try-except
+    try:
+        os.makedirs(upload_dir, exist_ok=True)
+        app.mount("/uploads", StaticFiles(directory=upload_dir), name="uploads")
+    except Exception:
+        pass  # Vercel ke read-only environment mein ignore ho jayega
 # Include API v1 routes
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
