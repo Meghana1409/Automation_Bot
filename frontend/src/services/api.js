@@ -4,7 +4,7 @@ import axios from 'axios';
  * Base URL for the FastAPI backend.
  * Uses VITE_API_URL if configured, otherwise falls back to local FastAPI on port 8000.
  */
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api/v1';
 
 /**
  * Configured Axios Client Instance
