@@ -1,0 +1,20 @@
+{
+  "name": "whatsapp-clinic-monorepo",
+  "version": "1.0.0",
+  "description": "Monorepo for Care & Cure Clinic: FastAPI backend and React Vite Tailwind frontend",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n \"BACKEND,FRONTEND\" -c \"blue,green\" \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "powershell -Command \"Set-Location backend; .\\.venv\\Scripts\\python.exe run.py\"",
+    "dev:frontend": "powershell -Command \"Set-Location frontend; npm run dev\"",
+    "build:frontend": "powershell -Command \"Set-Location frontend; npm run build\"",
+    "install:frontend": "powershell -Command \"Set-Location frontend; npm install\"",
+    "test:backend": "powershell -Command \"Set-Location backend; .\\.venv\\Scripts\\python.exe test_backend.py\""
+  },
+  "dependencies": {
+    "ngrok": "^5.0.0-beta.2"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

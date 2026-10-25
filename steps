@@ -1,0 +1,14 @@
+ python .\main.py 
+ npx ngrok http 3000
+ npx ngrok config add-authtoken 3DkXQKVgHslKoRtN7zcsktZfPxN_7Nni9zDfe2P6jPcjPHDzY
+ postgresql://postgres:MyBot@31115@db.dkascczgngxrdplwkxqr.supabase.co:5432/postgres
+
+
+ connect to frontend
+ see in db before booking appointment
+ 
+
+npm --prefix frontend run build
+npm run dev 
+
+.\.venv\Scripts\python.exe run.py 
