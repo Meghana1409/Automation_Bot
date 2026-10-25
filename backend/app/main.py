@@ -110,7 +110,7 @@ def seed_admin_user():
             # Agar nahi hai, toh automatically create kar do
             new_admin = User(
                 email=admin_email,
-                hashed_password=hash_password("tera_hardcoded_password"), # Apna password yahan daal
+                hashed_password=hash_password("Admin@123"), # Apna password yahan daal
                 is_admin=True
             )
             db.add(new_admin)
