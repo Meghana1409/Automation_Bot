@@ -94,6 +94,32 @@ def root():
         "status": "online"
     }
 
+from app.database import SessionLocal
+from app.models.user import User  # Tera user/admin model jo bhi ho
+from app.core.security import hash_password # Password hash karne ke liye
+
+@app.on_event("startup")
+def seed_admin_user():
+    db = SessionLocal()
+    try:
+        # Check kar ki hardcoded admin pehle se database mein hai ya nahi
+        admin_email = "admin@example.com" # Apne hardcoded wala email yahan daal
+        existing_admin = db.query(User).filter(User.email == admin_email).first()
+        
+        if not existing_admin:
+            # Agar nahi hai, toh automatically create kar do
+            new_admin = User(
+                email=admin_email,
+                hashed_password=hash_password("tera_hardcoded_password"), # Apna password yahan daal
+                is_admin=True
+            )
+            db.add(new_admin)
+            db.commit()
+    except Exception as e:
+        print("Admin seed error:", e)
+    finally:
+        db.close()
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
