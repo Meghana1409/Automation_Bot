@@ -52,6 +52,11 @@ app = FastAPI(
     redoc_url="/redoc"
 )
 handler = Mangum(app)
+# Include API v1 routes
+app.include_router(api_router, prefix=settings.API_V1_STR)
+
+# Top-level webhook route for direct Meta Webhook URLs (e.g. /webhook)
+app.include_router(webhook.router, prefix="/webhook", tags=["Meta Webhook (Direct)"])
 frontend_dist_path = os.path.join(os.path.dirname(__file__), "../frontend_dist")
 if os.path.exists(frontend_dist_path):
     app.mount("/", StaticFiles(directory=frontend_dist_path, html=True), name="frontend")
@@ -92,11 +97,7 @@ else:
         app.mount("/uploads", StaticFiles(directory=upload_dir), name="uploads")
     except Exception:
         pass  # Vercel ke read-only environment mein ignore ho jayega
-# Include API v1 routes
-app.include_router(api_router, prefix=settings.API_V1_STR)
 
-# Top-level webhook route for direct Meta Webhook URLs (e.g. /webhook)
-app.include_router(webhook.router, prefix="/webhook", tags=["Meta Webhook (Direct)"])
 
 @app.get("/", tags=["Root"])
 def root():
