@@ -26,7 +26,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 )
 logger = logging.getLogger("clinic_bot")
-
+print(settings.DATABASE_URL)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup: ensure tables are created
