@@ -19,7 +19,7 @@ from app.services import appointment_service
 
 router = APIRouter()
 
-@router.get("/", response_model=List[AppointmentResponse], summary="List all appointments")
+@router.get("", response_model=List[AppointmentResponse], summary="List all appointments")
 def read_appointments(
     doctor_name: Optional[str] = Query(None, description="Filter by doctor name"),
     staff_id: Optional[int] = Query(None, description="Filter by staff ID"),
