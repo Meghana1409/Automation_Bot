@@ -21,7 +21,7 @@ def build_staff_response(staff: Staff) -> StaffResponse:
     res.service_ids = [s.id for s in staff.services]
     return res
 
-@router.get("/", response_model=List[StaffResponse], summary="List all staff members and mapped services")
+@router.get("", response_model=List[StaffResponse], summary="List all staff members and mapped services")
 def list_staff(
     active_only: bool = Query(False, description="Filter only active staff"),
     service_id: Optional[int] = Query(None, description="Filter staff providing a specific service"),
