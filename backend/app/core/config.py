@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     # Meta / WhatsApp Webhook configuration
     META_ACCESS_TOKEN: str = ""
     MY_WEBHOOK_VERIFY_TOKEN: str = ""
-    WHATSAPP_PHONE_ID: str 
+    WHATSAPP_PHONE_ID: str = "1118016721403625"
     
     # AI Providers
     GROQ_API_KEY: str = ""
