@@ -17,8 +17,14 @@ from app.core.config import settings
 from app.core.database import init_db
 from app.api.v1.router import api_router
 from app.api.v1.endpoints import webhook
-import os
+
 from fastapi.staticfiles import StaticFiles
+import os
+
+# Frontend dist folder mount karo agar exist karta hai
+frontend_dist_path = os.path.join(os.path.dirname(__file__), "../frontend_dist")
+if os.path.exists(frontend_dist_path):
+    app.mount("/", StaticFiles(directory=frontend_dist_path, html=True), name="frontend")
 
 # Set up logging
 logging.basicConfig(
