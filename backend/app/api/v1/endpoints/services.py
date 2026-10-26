@@ -14,7 +14,7 @@ from app.schemas.service import ServiceCreate, ServiceUpdate, ServiceResponse
 
 router = APIRouter()
 
-@router.get("/", response_model=List[ServiceResponse], summary="List all clinical services")
+@router.get("", response_model=List[ServiceResponse], summary="List all clinical services")
 def list_services(
     category: Optional[str] = Query(None, description="Filter by category"),
     search: Optional[str] = Query(None, description="Search by service name or description"),
