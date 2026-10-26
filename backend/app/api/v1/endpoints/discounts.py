@@ -20,7 +20,7 @@ from app.schemas.discount import (
 
 router = APIRouter()
 
-@router.get("/", response_model=List[DiscountRuleResponse], summary="List all discount rules & bundles")
+@router.get("", response_model=List[DiscountRuleResponse], summary="List all discount rules & bundles")
 def list_discounts(
     rule_type: Optional[str] = Query(None, description="Filter by 'first_order', 'festival', or 'service_bundle'"),
     active_only: bool = Query(False, description="Filter only active rules"),
