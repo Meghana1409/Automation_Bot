@@ -9,12 +9,12 @@ class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     
     # Database URL: default to local SQLite if not provided or empty
-    DATABASE_URL: str = "sqlite:///./clinic.db"
+    DATABASE_URL: str 
     
     # Meta / WhatsApp Webhook configuration
     META_ACCESS_TOKEN: str = ""
     MY_WEBHOOK_VERIFY_TOKEN: str = ""
-    WHATSAPP_PHONE_ID: str = "1118016721403625"
+    WHATSAPP_PHONE_ID: str 
     
     # AI Providers
     GROQ_API_KEY: str = ""
