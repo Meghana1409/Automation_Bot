@@ -22,9 +22,6 @@ from fastapi.staticfiles import StaticFiles
 import os
 
 # Frontend dist folder mount karo agar exist karta hai
-frontend_dist_path = os.path.join(os.path.dirname(__file__), "../frontend_dist")
-if os.path.exists(frontend_dist_path):
-    app.mount("/", StaticFiles(directory=frontend_dist_path, html=True), name="frontend")
 
 # Set up logging
 logging.basicConfig(
@@ -55,6 +52,9 @@ app = FastAPI(
     redoc_url="/redoc"
 )
 handler = Mangum(app)
+frontend_dist_path = os.path.join(os.path.dirname(__file__), "../frontend_dist")
+if os.path.exists(frontend_dist_path):
+    app.mount("/", StaticFiles(directory=frontend_dist_path, html=True), name="frontend")
 
 # CORS setup for React / Vite frontend
 app.add_middleware(
