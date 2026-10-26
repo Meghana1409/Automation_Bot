@@ -28,7 +28,7 @@ def get_capacity_settings(db: Session = Depends(get_db)):
         db.refresh(capacity)
     return capacity
 
-@router.put("/", response_model=CapacityResponse, summary="Update booking capacity limit")
+@router.put("", response_model=CapacityResponse, summary="Update booking capacity limit")
 def update_capacity_settings(
     cap_in: CapacityUpdate,
     current_admin: AdminUser = Depends(get_current_admin),
