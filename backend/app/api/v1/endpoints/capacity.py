@@ -18,7 +18,7 @@ from app.schemas.schedule import (
 
 router = APIRouter()
 
-@router.get("/", response_model=CapacityResponse, summary="Get booking capacity settings")
+@router.get("", response_model=CapacityResponse, summary="Get booking capacity settings")
 def get_capacity_settings(db: Session = Depends(get_db)):
     capacity = db.query(BookingCapacity).first()
     if not capacity:
